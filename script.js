@@ -1,76 +1,42 @@
-function getSubnetMask(subnet) {
-  if (subnet < 0) {
-    throw new Error("Subnet can't be negative.");
-  }
-  if (isNaN(subnet)) {
-    throw new Error("Subnet can't be NaN (not a number).");
-  }
-  if (subnet > 32) {
-    throw new Error("Subnet can't be more than 32.");
-  }
+const btn = document.querySelector(".submit");
+const inputIp = document.querySelector("#ip");
+const inputSubnet = document.querySelector("#subnet");
 
-  let maskNumbers = [0, 128, 192, 224, 240, 248, 252, 254, 255];
+const resultIp = document.querySelector(".ip-subnet");
+const resultSubnetMask = document.querySelector(".subnet-mask");
+const resultUsableHost = document.querySelector(".usable-host");
+const resultIpNetwork = document.querySelector(".ip-network");
+const resultIpBroadcast = document.querySelector(".ip-broadcast");
 
-  if (subnet >= 24) {
-    return [maskNumbers[8], maskNumbers[8], maskNumbers[8], maskNumbers[subnet-24]];
-  } 
-  if (subnet >= 16) {
-    return [maskNumbers[8], maskNumbers[8], maskNumbers[subnet-16], maskNumbers[0]];
-  } 
-  if (subnet >= 8) {
-    return [maskNumbers[8], maskNumbers[subnet-8], maskNumbers[0], maskNumbers[0]];
-  }
-  return [maskNumbers[subnet], maskNumbers[0], maskNumbers[0], maskNumbers[0]]
+btn.addEventListener("click", () => {
+  applyResult(resultIp, resultSubnetMask, resultUsableHost, resultIpNetwork, resultIpBroadcast);
+});
+
+function getResult(ip, subnet) {
+  const ipArray = ip.split('.');
+  const ipSubnet = ip + '/' + subnet;
+  const subnetMask = getSubnetMask(subnet);
+  const subnetMaskBinary = subnetMask.map(getBinary);
+  const usableHost = getHostCount(subnetMaskBinary) - 2;
+  const hostId = ipArray.at(-1);
+  const subnetBlock = getSubnetBlock(subnetMaskBinary.at(-1));
+  const subnetBlockIpCount = 256 / subnetBlock;
+  const networkBroadcast = getNetworkAndBroadcast(subnetBlockIpCount, hostId);
+  const ipNetwork = [...ipArray.slice(0, -1), networkBroadcast[0]].join('.');
+  const ipBroadcast = [...ipArray.slice(0, -1), networkBroadcast[1]].join('.');
+
+  return [ipSubnet, subnetMask.join('.'), usableHost, ipNetwork, ipBroadcast];
 }
 
-function getBinary(number) {
-  return number.toString(2).padStart(8, "0");
-}
+function applyResult(...resultElement) {
+  const ip = inputIp.value;
+  const subnet = inputSubnet.value;
 
-function getNumberCount(binary, number) {
-  return binary.toString().split(number).length - 1;
-}
+  const result = getResult(ip, subnet);
 
-function getHostCount(subnetMask) {
-  return 2**getNumberCount(subnetMask.join(""), 0);
-}
-
-function getIpNetworkAndBroadcast(ipCount, hostId) {
-  hostId = Number(hostId);
-  let ipNetwork = 0;
-  let ipBroadcast = ipCount-1;
-
-  while (ipNetwork < 256) {
-    if (ipBroadcast > hostId && hostId > ipNetwork) {
-      return [ipNetwork, ipBroadcast];
-    }
-
-    ipNetwork += ipCount;
-    ipBroadcast = ipNetwork + ipCount - 1;
+  for (const [i, element] of resultElement.entries()) {
+    element.innerHTML = result[i]
   }
+  inputIp.value = "";
+  inputSubnet.value = "";
 }
-
-const ipFull = "195.20.40.245/27";
-const ip = ipFull.split("/")[0];
-const ipArray = ip.split('.');
-const subnet = Number(ipFull.split("/")[1]);
-const subnetMask = getSubnetMask(subnet);
-const subnetMaskBinary = subnetMask.map(getBinary);
-const subnetBlock = 2**getNumberCount(subnetMaskBinary.at(-1), 1);
-const subnetBlockIpCount = 256 / subnetBlock;
-const hostCount = getHostCount(subnetMaskBinary);
-const ipNetworkBroadcast = getIpNetworkAndBroadcast(subnetBlockIpCount, ipArray.at(-1));
-
-console.log(`
-ip + subnet: ${ipFull} 
-ip: ${ip}
-subnet: /${subnet}
-subnet mask: ${subnetMask}
-subnet mask biner: ${subnetMaskBinary}
-jumlah host: ${hostCount}
-jumlah host yg bisa dipake: ${hostCount - 2}
-subnet block: ${subnetBlock}
-jumlah ip subnet block: ${subnetBlockIpCount}
-ip network: ${ipNetworkBroadcast[0]}
-ip broadcast: ${ipNetworkBroadcast[1]}
-`)
