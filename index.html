@@ -3,9 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>IP Subnet Calculator</title>
 </head>
 <body>
-  
+  <h2>Kalkulator Subnet IP CIDR Kelas C</h2>
+  <input type="text" name="ip" id="ip" placeholder="IP">
+  <input type="text" name="subnet" id="subnet" placeholder="Subnet">
+  <button class="submit">Hitung</button>
+  <div class="results">
+    <p>Subnet mask: <span class="subnet-mask"></span></p>
+    <p>Jumlah host yang bisa dipakai: <span class="usable-host"></span></p>
+    <p>IP Network: <span class="ip-network"></span></p>
+    <p>IP Broadcast: <span class="ip-broadcast"></span></p>
+  </div>
 </body>
 </html>
