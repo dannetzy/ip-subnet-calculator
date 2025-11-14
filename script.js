@@ -22,8 +22,8 @@ function getResult(ip, subnet) {
   const subnetBlock = getSubnetBlock(subnetMaskBinary.at(-1));
   const subnetBlockIpCount = 256 / subnetBlock;
   const networkBroadcast = getNetworkAndBroadcast(subnetBlockIpCount, hostId);
-  const ipNetwork = [...ipArray.slice(0, -1), networkBroadcast[0]].join('.');
-  const ipBroadcast = [...ipArray.slice(0, -1), networkBroadcast[1]].join('.');
+  const ipNetwork = [...ipArray.slice(0, -1), networkBroadcast[0]].join('.') + '/' + subnet;
+  const ipBroadcast = [...ipArray.slice(0, -1), networkBroadcast[1]].join('.') + '/' + subnet;
 
   return [ipSubnet, subnetMask.join('.'), usableHost, ipNetwork, ipBroadcast];
 }
