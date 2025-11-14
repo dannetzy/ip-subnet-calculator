@@ -32,6 +32,11 @@ function applyResult(...resultElement) {
   const ip = inputIp.value;
   const subnet = inputSubnet.value;
 
+  if (Number(subnet) < 24) {
+    alert("Hanya menerima subnet /24 - /30.");
+    return;
+  }
+
   const result = getResult(ip, subnet);
 
   for (const [i, element] of resultElement.entries()) {
