@@ -2,14 +2,22 @@ const btn = document.querySelector(".submit");
 const inputIp = document.querySelector("#ip");
 const inputSubnet = document.querySelector("#subnet");
 
-const resultIp = document.querySelector(".ip-subnet");
-const resultSubnetMask = document.querySelector(".subnet-mask");
-const resultUsableHost = document.querySelector(".usable-host");
-const resultIpNetwork = document.querySelector(".ip-network");
-const resultIpBroadcast = document.querySelector(".ip-broadcast");
+const resultELement = document.querySelectorAll(".results span");
 
 btn.addEventListener("click", () => {
-  applyResult(resultIp, resultSubnetMask, resultUsableHost, resultIpNetwork, resultIpBroadcast);
+  applyResult(...resultELement);
+});
+
+inputIp.addEventListener("keyup", ({key}) => {
+  if (key === 'Enter') {
+    btn.click();
+  }
+});
+
+inputSubnet.addEventListener("keyup", ({key}) => {
+  if (key === 'Enter') {
+    btn.click();
+  }
 });
 
 function getResult(ip, subnet) {
@@ -32,15 +40,15 @@ function applyResult(...resultElement) {
   const ip = inputIp.value;
   const subnet = inputSubnet.value;
 
-  if (Number(subnet) < 24) {
-    alert("Hanya menerima subnet /24 - /30.");
+  if (Number(subnet) < 24 || Number(subnet) > 32) {
+    alert("Hanya menerima subnet /24 - /32.");
     return;
   }
 
   const result = getResult(ip, subnet);
 
   for (const [i, element] of resultElement.entries()) {
-    element.innerHTML = result[i]
+    element.innerHTML = result[i];
   }
   inputIp.value = "";
   inputSubnet.value = "";
