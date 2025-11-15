@@ -10,21 +10,60 @@
   <script src="script.js" type="module" defer></script>
 </head>
 <body>
-  <h2>Kalkulator Subnet IP CIDR Kelas C</h2>
-  <section class="inputs">
+  <header>
+    <h2>Kalkulator Subnet IP CIDR Kelas C</h2>
+  </header>
+  <div class="inputs">
     <input type="text" name="ip" id="ip" placeholder="IP"> /
     <input type="text" name="subnet" id="subnet" placeholder="Subnet">
     <button class="submit">Hitung</button>
-  </section>
-  <section class="results">
+  </div>
+  <div class="results">
     <p>IP: <span class="ip-subnet"></span></p>
     <p>Subnet mask: <span class="subnet-mask"></span></p>
     <p>Jumlah host yang bisa dipakai: <span class="usable-host"></span></p>
     <p>IP Network: <span class="ip-network"></span></p>
     <p>IP Broadcast: <span class="ip-broadcast"></span></p>
-  </section>
+  </div>
   <br>
   <p>Check out the code on <a href="https://github.com/dannetzy/ip-subnet-calculator" target="_blank">Github</a>.</p>
+  <hr>
+  <article>
+    <section>
+      <h2>Cara Hitung Subnet IP CIDR Kelas C</h2>
+      <p>Contoh soal:</p>
+      <p>203.45.118.173/28</p>
+      <p>Cari:</p>
+      <ul>
+        <li>Subnet mask</li>
+        <li>Jumlah host yang bisa dipakai</li>
+        <li>IP Network</li>
+        <li>IP Broadcast</li>
+      </ul>
+    </section>
+    <section>
+      <h3>1. Cari subnet</h3>
+      <p>Udah tau lah ya. Kalo belum tau:</p>
+      <ul>
+        <li>/8 = 255.0.0.0</li>
+        <li>/16 = 255.255.0.0</li>
+        <li>/24 = 255.255.255.0</li>
+      </ul>
+      <ul>
+        <li>+1 = 128</li>
+        <li>+2 = 192</li>
+        <li>+3 = 224</li>
+        <li>+4 = 240</li>
+        <li>+5 = 248</li>
+        <li>+6 = 252</li>
+        <li>+7 = 254</li>
+      </ul>
+      <p>Jadi:</p>
+      <p>/28 = /24 + 4</p>
+      <p>/28 = 255.255.255.0 + 240</p>
+      <p>/28 = 255.255.255.240</p>
+    </section>
+  </article>
   <footer class="footer">
     <div class="footer-wrapper">
       Made by <a href="https://dannetzy.github.io/">DanneTzy</a>
