@@ -1,3 +1,9 @@
+import { getSubnetMask } from './core.js';
+import { getBinary } from './core.js';
+import { getHostCount } from './core.js';
+import { getNetworkAndBroadcast } from './core.js';
+import { getSubnetBlock } from './core.js';
+
 const btn = document.querySelector(".submit");
 const inputIp = document.querySelector("#ip");
 const inputSubnet = document.querySelector("#subnet");
