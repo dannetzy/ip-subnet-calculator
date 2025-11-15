@@ -1,8 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.subnet-examples {
-  display: flex;
-  gap: 2rem;
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+tr {
+  height: 1.5rem;
+}
+
+td {
+  width: 2rem;
+}
+
+.binary-table :is(th, td) {
+  padding: 0 0.5rem;
 }
