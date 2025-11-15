@@ -24,14 +24,18 @@ export function getSubnetMask(subnet) {
 }
 
 export function getBinary(number) {
+  // converts number to base 2 (binary) and pad the start with 0's
+  // the latter is not needed but it's there anyways
   return number.toString(2).padStart(8, "0");
 }
 
 export function getNumberCount(binary, number) {
-  return binary.split(number).length - 1;
+  const regex = new RegExp(number, 'g')
+  return (binary.match(regex)||[]).length;
 }
 
 export function getHostCount(subnetMaskBinary) {
+  // host count = 2^(number of zeroes)
   return 2**getNumberCount(subnetMaskBinary.join(""), 0);
 }
 
@@ -40,6 +44,11 @@ export function getNetworkBroadcast(ipCount, hostId) {
   let ipNetwork = 0;
   let ipBroadcast = ipCount-1;
 
+  /* x = number of ip
+    |  0  |  x   |  2x  |  3x  | ... |  ax  |
+    |     |      |      |      |     |      |
+    | x-1 | 2x-1 | 3x-1 | 4x-1 | ... |ax+x-1|
+  */
   while (ipNetwork < 256) {
     if (ipBroadcast > hostId && hostId > ipNetwork) {
       return [ipNetwork, ipBroadcast];
@@ -51,5 +60,6 @@ export function getNetworkBroadcast(ipCount, hostId) {
 }
 
 export function getSubnetBlock(binary) {
+  // host count = 2^(number of ones)
   return 2**getNumberCount(binary, 1);
 }
