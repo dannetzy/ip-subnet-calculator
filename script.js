@@ -1,7 +1,7 @@
 import { getSubnetMask } from './core.js';
 import { getBinary } from './core.js';
 import { getHostCount } from './core.js';
-import { getNetworkAndBroadcast } from './core.js';
+import { getNetworkBroadcast } from './core.js';
 import { getSubnetBlock } from './core.js';
 
 const btn = document.querySelector(".submit");
@@ -35,7 +35,7 @@ function getResult(ip, subnet) {
   const hostId = ipArray.at(-1);
   const subnetBlock = getSubnetBlock(subnetMaskBinary.at(-1));
   const subnetBlockIpCount = 256 / subnetBlock;
-  const networkBroadcast = getNetworkAndBroadcast(subnetBlockIpCount, hostId);
+  const networkBroadcast = getNetworkBroadcast(subnetBlockIpCount, hostId);
   const ipNetwork = [...ipArray.slice(0, -1), networkBroadcast[0]].join('.') + '/' + subnet;
   const ipBroadcast = [...ipArray.slice(0, -1), networkBroadcast[1]].join('.') + '/' + subnet;
 

@@ -35,7 +35,7 @@ export function getHostCount(subnetMaskBinary) {
   return 2**getNumberCount(subnetMaskBinary.join(""), 0);
 }
 
-export function getNetworkAndBroadcast(ipCount, hostId) {
+export function getNetworkBroadcast(ipCount, hostId) {
   hostId = Number(hostId);
   let ipNetwork = 0;
   let ipBroadcast = ipCount-1;
