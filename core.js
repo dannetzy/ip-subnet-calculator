@@ -44,7 +44,7 @@ export function getNetworkBroadcast(ipCount, hostId) {
   let ipNetwork = 0;
   let ipBroadcast = ipCount-1;
 
-  /* x = number of ip
+  /* x = number of ip (ipCount)
     |  0  |  x   |  2x  |  3x  | ... |  ax  |
     |     |      |      |      |     |      |
     | x-1 | 2x-1 | 3x-1 | 4x-1 | ... |ax+x-1|
