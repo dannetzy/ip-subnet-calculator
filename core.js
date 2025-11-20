@@ -49,8 +49,8 @@ function getNetworkBroadcast(ipCount, hostId) {
     |     |      |      |      |     |      |
     | x-1 | 2x-1 | 3x-1 | 4x-1 | ... |ax+x-1|
   */
-  while (ipNetwork < 256) {
-    if (ipBroadcast > hostId && hostId > ipNetwork) {
+  while (ipNetwork <= 255) {
+    if (ipBroadcast >= hostId && hostId >= ipNetwork) {
       return [ipNetwork, ipBroadcast];
     }
 
